@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weber Gartenbau – Sersheim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0a0a;--dark:#111214;--panel:#161819;--border:rgba(255,255,255,0.07);--white:#f0ede8;--muted:rgba(240,237,232,0.45);--accent:#c8a96e;--glass:rgba(255,255,255,0.03)}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(200,169,110,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(10,10,10,.9),transparent);transition:backdrop-filter .4s,background .4s}
+nav.scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--white);text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--accent)}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 64px 80px;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(200,169,110,.06) 0%,transparent 60%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:32px;opacity:0;animation:fadeUp .8s ease .2s forwards}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--accent)}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,10vw,130px);line-height:.92;letter-spacing:2px;margin-bottom:32px;opacity:0;animation:fadeUp .9s ease .4s forwards}
+.hero-title .accent{color:var(--accent)}
+.hero-title .outline{-webkit-text-stroke:1px rgba(240,237,232,.3);color:transparent}
+.hero-desc{font-size:17px;line-height:1.8;color:var(--muted);max-width:560px;margin-bottom:48px;opacity:0;animation:fadeUp .9s ease .6s forwards}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .9s ease .8s forwards}
+.btn-primary{padding:16px 36px;background:var(--accent);color:var(--black);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:transform .3s,box-shadow .3s;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,169,110,.3)}
+.btn-secondary{padding:16px 36px;background:transparent;color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border:1px solid var(--border);transition:border-color .3s,color .3s;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.hero-stats{display:flex;gap:64px;margin-top:80px;opacity:0;animation:fadeUp .9s ease 1s forwards}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--accent);line-height:1}
+.stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.ticker-wrap{background:var(--accent);padding:14px 0;overflow:hidden}
+.ticker{display:flex;animation:ticker 20s linear infinite;white-space:nowrap}
+.ticker-item{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--black);padding:0 40px;display:flex;align-items:center;gap:16px}
+.ticker-item::after{content:'◆';font-size:8px}
+section{padding:120px 64px}
+.section-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.section-tag::before{content:'';width:24px;height:1px;background:var(--accent)}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,5vw,68px);line-height:1;letter-spacing:1px;margin-bottom:24px}
+#leistungen{background:var(--dark)}
+.leistungen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:64px;border:1px solid var(--border)}
+.leistung-card{background:var(--panel);padding:48px 40px;position:relative;overflow:hidden;transition:background .4s}
+.leistung-card::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.leistung-card:hover{background:#1a1c1e}
+.leistung-card:hover::before{transform:scaleX(1)}
+.leistung-num{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--border);line-height:1;margin-bottom:24px;transition:color .4s}
+.leistung-card:hover .leistung-num{color:rgba(200,169,110,.15)}
+.leistung-icon{font-size:28px;margin-bottom:20px}
+.leistung-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;margin-bottom:12px}
+.leistung-desc{font-size:14px;line-height:1.8;color:var(--muted)}
+#prozess{background:var(--black)}
+.prozess-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative}
+.prozess-steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent);opacity:.3}
+.prozess-step{padding:0 32px;text-align:center}
+.step-num{width:56px;height:56px;border:1px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent);margin:0 auto 24px;background:var(--black);position:relative;z-index:1;transition:background .3s,transform .3s,color .3s}
+.prozess-step:hover .step-num{background:var(--accent);color:var(--black);transform:scale(1.1)}
+.step-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin-bottom:12px}
+.step-desc{font-size:13px;line-height:1.8;color:var(--muted)}
+#kontakt{background:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.kontakt-item{display:flex;gap:20px;margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+.kontakt-item:last-child{border-bottom:none;margin:0;padding:0}
+.kontakt-icon{width:48px;height:48px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px;flex-shrink:0}
+.kontakt-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.kontakt-value{font-size:16px;color:var(--white)}
+.kontakt-value a{color:var(--white);text-decoration:none;transition:color .3s}
+.kontakt-value a:hover{color:var(--accent)}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.form-group input,.form-group textarea{width:100%;background:var(--panel);border:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;padding:14px 18px;outline:none;transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{height:120px;resize:none}
+.form-submit{width:100%;padding:18px;background:var(--accent);color:var(--black);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .3s,transform .3s;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+.form-submit:hover{opacity:.9;transform:translateY(-1px)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:40px 64px;display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px}
+.footer-logo span{color:var(--accent)}
+.footer-copy{font-size:12px;color:var(--muted);letter-spacing:1px}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:900px){
+  #hero{padding:120px 32px 80px}
+  .leistungen-grid{grid-template-columns:1fr}
+  #kontakt{grid-template-columns:1fr;padding:80px 32px}
+  .prozess-steps{grid-template-columns:1fr 1fr;gap:40px}
+  .prozess-steps::before{display:none}
+  nav{padding:20px 28px}
+  .nav-links{display:none}
+  section{padding:80px 32px}
+  footer{flex-direction:column;gap:16px;text-align:center;padding:32px}
+  .hero-stats{gap:32px}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav id="navbar">
+  <a href="#" class="nav-logo">Weber <span>Gartenbau</span></a>
+  <ul class="nav-links">
+    <li><a href="#leistungen">Leistungen</a></li>
+    <li><a href="#prozess">Ablauf</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
+<section id="hero">
+  <div class="hero-tag">Gartengestaltung · Sersheim</div>
+  <h1 class="hero-title">Weber<br><span class="accent">Gartenbau</span><br><span class="outline">SERSHEIM</span></h1>
+  <p class="hero-desc">Professionelle Gartengestaltung im Raum Sersheim und Umgebung. Qualität, Zuverlässigkeit und faire Preise – direkt aus einer Hand. Rufen Sie uns an für ein kostenloses Angebot.</p>
+  <div class="hero-cta">
+    <a href="#kontakt" class="btn-primary">Jetzt anfragen</a>
+    <a href="#leistungen" class="btn-secondary">Leistungen ansehen</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num" data-count="15">0+</div><div class="stat-label">Jahre Erfahrung</div></div>
+    <div class="stat"><div class="stat-num" data-count="500">0+</div><div class="stat-label">Zufriedene Kunden</div></div>
+    <div class="stat"><div class="stat-num" data-count="100">0%</div><div class="stat-label">Qualitätsgarantie</div></div>
+  </div>
+</section>
+<div class="ticker-wrap"><div class="ticker">
+  <span class="ticker-item">Gartengestaltung</span><span class="ticker-item">Sersheim</span>
+  <span class="ticker-item">Qualitätsarbeit</span><span class="ticker-item">Festpreisgarantie</span>
+  <span class="ticker-item">Schnell & Zuverlässig</span><span class="ticker-item">Kostenlose Beratung</span>
+  <span class="ticker-item">Gartengestaltung</span><span class="ticker-item">Sersheim</span>
+  <span class="ticker-item">Qualitätsarbeit</span><span class="ticker-item">Festpreisgarantie</span>
+  <span class="ticker-item">Schnell & Zuverlässig</span><span class="ticker-item">Kostenlose Beratung</span>
+</div></div>
+<section id="leistungen" class="reveal">
+  <div class="section-tag">Was wir anbieten</div>
+  <h2 class="section-title">UNSERE LEISTUNGEN</h2>
+  <div class="leistungen-grid">
+    <div class="leistung-card"><div class="leistung-num">01</div><div class="leistung-icon">⭐</div><div class="leistung-title">Beratung</div><p class="leistung-desc">Kostenlose und unverbindliche Beratung vor Ort. Wir nehmen uns Zeit für Ihre Anforderungen.</p></div>
+    <div class="leistung-card"><div class="leistung-num">02</div><div class="leistung-icon">🔧</div><div class="leistung-title">Ausführung</div><p class="leistung-desc">Professionelle Ausführung durch erfahrene Fachkräfte. Termingerecht und sauber.</p></div>
+    <div class="leistung-card"><div class="leistung-num">03</div><div class="leistung-icon">✅</div><div class="leistung-title">Garantie</div><p class="leistung-desc">5 Jahre Gewährleistung auf alle Arbeiten. Ihre Zufriedenheit ist unser Anspruch.</p></div>
+    <div class="leistung-card"><div class="leistung-num">04</div><div class="leistung-icon">💰</div><div class="leistung-title">Festpreise</div><p class="leistung-desc">Transparente Festpreise ohne versteckte Kosten. Ihr Angebot ist Ihr Endpreis.</p></div>
+    <div class="leistung-card"><div class="leistung-num">05</div><div class="leistung-icon">📞</div><div class="leistung-title">Schnelle Reaktion</div><p class="leistung-desc">Wir melden uns innerhalb von 24 Stunden. Notfälle behandeln wir vorrangig.</p></div>
+    <div class="leistung-card"><div class="leistung-num">06</div><div class="leistung-icon">🏆</div><div class="leistung-title">Erfahrung</div><p class="leistung-desc">Über 15 Jahre Erfahrung im Raum Sersheim. Hunderte zufriedene Kunden sprechen für uns.</p></div>
+  </div>
+</section>
+<section id="prozess" class="reveal">
+  <div style="text-align:center;max-width:600px;margin:0 auto 64px;">
+    <div class="section-tag" style="justify-content:center;">So einfach geht's</div>
+    <h2 class="section-title">IHR PROJEKT IN 4 SCHRITTEN</h2>
+  </div>
+  <div class="prozess-steps">
+    <div class="prozess-step"><div class="step-num">01</div><div class="step-title">Kontakt</div><p class="step-desc">Rufen Sie uns an – Rückmeldung innerhalb 24h.</p></div>
+    <div class="prozess-step"><div class="step-num">02</div><div class="step-title">Besichtigung</div><p class="step-desc">Kostenlose Vor-Ort-Besichtigung und Beratung.</p></div>
+    <div class="prozess-step"><div class="step-num">03</div><div class="step-title">Angebot</div><p class="step-desc">Klares Festpreisangebot – transparent und fair.</p></div>
+    <div class="prozess-step"><div class="step-num">04</div><div class="step-title">Ausführung</div><p class="step-desc">Professionelle Arbeit zum vereinbarten Termin.</p></div>
+  </div>
+</section>
+<section id="kontakt" class="reveal">
+  <div>
+    <div class="section-tag">Jetzt anfragen</div>
+    <h2 class="section-title">KONTAKT</h2>
+    <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:48px;max-width:400px;">Kostenlose Beratung und unverbindliches Angebot – sprechen Sie uns einfach an.</p>
+    <div class="kontakt-item"><div class="kontakt-icon">📞</div><div><div class="kontakt-label">Telefon</div><div class="kontakt-value"><a href="tel:07042/777666">07042/777666</a></div></div></div>
+    <div class="kontakt-item"><div class="kontakt-icon">📍</div><div><div class="kontakt-label">Standort</div><div class="kontakt-value">Sersheim, Deutschland</div></div></div>
+    <div class="kontakt-item"><div class="kontakt-icon">🕐</div><div><div class="kontakt-label">Erreichbarkeit</div><div class="kontakt-value">Mo–Fr: 07:00–18:00 Uhr</div></div></div>
+  </div>
+  <div>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-group"><label>Ihr Name</label><input type="text" placeholder="Max Mustermann" required></div>
+      <div class="form-group"><label>Telefon oder E-Mail</label><input type="text" placeholder="Ihre Kontaktdaten" required></div>
+      <div class="form-group"><label>Ihre Nachricht</label><textarea placeholder="Beschreiben Sie kurz Ihr Vorhaben…"></textarea></div>
+      <button type="submit" class="form-submit">Kostenlos anfragen →</button>
+    </form>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">Weber <span>Gartenbau</span></div>
+  <div class="footer-copy">© 2026 Weber Gartenbau · Sersheim · Alle Rechte vorbehalten</div>
+</footer>
+<script>
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function animateRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animateRing)}
+animateRing();
+document.querySelectorAll('a,button,.leistung-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='56px';ring.style.height='56px'});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px'});
+});
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60));
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');e.target.querySelectorAll('.leistung-card,.prozess-step').forEach((el,i)=>{el.style.transitionDelay=(i*.1)+'s';el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .6s,transform .6s';setTimeout(()=>{el.style.opacity='1';el.style.transform='translateY(0)'},100+i*100)})}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function animateCount(el){const t=parseInt(el.dataset.count),s=el.dataset.count==='100'?'%':'+';let c=0;const inc=t/60,timer=setInterval(()=>{c+=inc;if(c>=t){el.textContent=t+s;clearInterval(timer)}else{el.textContent=Math.floor(c)+s}},25)}
+const sobs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-count]').forEach(animateCount);sobs.unobserve(e.target)}}),{threshold:.5});
+document.querySelectorAll('.hero-stats').forEach(el=>sobs.observe(el));
+function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('.form-submit');btn.textContent='✓ Nachricht gesendet';btn.style.background='#4a9e6a';setTimeout(()=>{btn.textContent='Kostenlos anfragen →';btn.style.background='';e.target.reset()},3000)}
+</script>
+</body>
+</html>
